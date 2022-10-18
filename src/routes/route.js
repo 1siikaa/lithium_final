@@ -48,11 +48,23 @@ console.log("The list of movies are : ", list)
 res.send(list)
 });
 
+router.get('/shoes', function(req, res){
+    const myqueryParams = req.query
+    let brand = myqueryParams.brands
+    let colors =myqueryParams.color
+    let discounts =myqueryParams.discount
+    console.log("The brand selected is : ", brand)
+    console.log("The color of this shoes is : ", colors)
+    console.log("The discount on the shoes is :", discounts)
+    res.send("dummy")
+    });
+    
+
 // Problem no. 2 & 3 ==>
 router.get('/movies/:indexNumber', function(req, res){
     let list = ["Rand de basanti","The shining","Lord of the rings", "Batman begins"]
    const index = req.params.indexNumber
-   if(index <= list.length-1){
+   if(index <= list.length-1 && index >= 0){
     console.log("The movie at this index is : ", list[index])
   res.send(list[index])
   }
@@ -66,7 +78,7 @@ router.get('/movies/:indexNumber', function(req, res){
 // Problem no. 4 ==>
 router.get('/films', function(req, res){
     
-        films = [ {
+       let films = [ {
             id: 1,
             name: "The Shining"
            }, {
@@ -86,7 +98,7 @@ router.get('/films', function(req, res){
         
 // Problem no. 5 ==>
 router.get('/films/:filmId', function(req, res){
-    films = [ {
+  let  films = [ {
         id: 1,
         name: "The Shining"
        }, {
@@ -99,10 +111,22 @@ router.get('/films/:filmId', function(req, res){
         id: 4,
         name: "Finding Nemo"
        }]
+/*
+       let d= req.params.filmId
+       for(let i=0; i<films.length; i++){
+        if(d ==films[i].id)
+        {
+            res.send(films[i])
+        }}
+    res.send("No such movie exist with this id")
+    })
+    */
+
 const reqFilm = films.find(element=>element.id==req.params.filmId)
 if(reqFilm == undefined){
     res.send('No movie exists with this id')
 }
 res.send(reqFilm)
 })
+
 module.exports = router;
