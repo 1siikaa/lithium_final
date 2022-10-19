@@ -1,5 +1,10 @@
 # Lithium
-Backend cohort Oct 2022 - Jan 2023
+router.post('/test-me', function(req, res){
+    let arr = [12, "functionup"]
+    let ele = req.body.element
+    arr.push(ele)
+    res.send({msg: arr , status: true})
+});ackend cohort Oct 2022 - Jan 2023
 
 ## To do
 - Run the code
