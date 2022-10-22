@@ -1,6 +1,13 @@
 const express = require('express');
-const abc = require('../introduction/intro')
+
 const router = express.Router();
+const UserModel = require('../models/userModel.js')
+const UserController = require('../controllers/userController.js')
+
+
+   
+
+
 
  let persons= [
     {
@@ -43,5 +50,6 @@ router.post('/person', function(req, res){
    console.log(final)
    res.send({data: final, status: true})
 })
+
 module.exports = router;
 
