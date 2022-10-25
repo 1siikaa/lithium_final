@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const BookModel = require('../db/mydb.js')
-const BookController = require('../logic_db/logic.js')
-const NameModel = require('../db/namedb.js')
-const NameController = require('../logic_db/namelogic.js')
+const BookModel = require('../db/bookdb.js')
+const BookController = require('../logic_db/booklogic.js')
 
-router.post('/newBook', BookController.addBook)
-router.get('/listBook', BookController.fetchBook)
 
-router.post('/names', NameController.addNames)
-router .get('/getNames', NameController.fetchNames)
+router.post('/createBook', BookController.createBook) //11+
+router.get('/bookList', BookController.bookList)
+router.post('/getBooksInYear', BookController.getBooksInYear) // query
+router.post('/getParticularBooks', BookController.getParticularBooks) // query
+router.get('/getXINRBooks', BookController.getXINRBooks)
+router.get('/getRandomBooks', BookController.getRandomBooks)
+
 
 
 module.exports = router;
