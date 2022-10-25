@@ -1,55 +1,16 @@
 const express = require('express');
-
 const router = express.Router();
-const UserModel = require('../models/userModel.js')
-const UserController = require('../controllers/userController.js')
+const BookModel = require('../db/mydb.js')
+const BookController = require('../logic_db/logic.js')
+const NameModel = require('../db/namedb.js')
+const NameController = require('../logic_db/namelogic.js')
 
+router.post('/newBook', BookController.addBook)
+router.get('/listBook', BookController.fetchBook)
 
-   
+router.post('/names', NameController.addNames)
+router .get('/getNames', NameController.fetchNames)
 
-
-
- let persons= [
-    {
-    "name": "PK",
-    "age": 10,
-    "votingStatus": false
- },
- {
-    "name": "SK",
-    "age": 20,
-    "votingStatus": false
- },
- {
-    "name": "AA",
-    "age": 70,
-    "votingStatus": false
- },
- {
-    "name": "SC",
-    "age": 5,
-    "votingStatus": false
- },
- {
-    "name": "HO",
-    "age": 40,
-    "votingStatus": false
- }
- ]
-router.post('/person', function(req, res){
-
-   let Age = req.query.votingAge
-   let final =[]
-   let index
-   const result = persons.filter((element)=> element.age > Age)
-   for(let i=0; i<result.length; i++){
-    index = result[i]
-    if(index.votingStatus==false)  index.votingStatus= true
-   final.push(index)
-   }
-   console.log(final)
-   res.send({data: final, status: true})
-})
 
 module.exports = router;
 
