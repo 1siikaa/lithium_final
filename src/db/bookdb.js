@@ -11,6 +11,7 @@ const bookSchema = new mongoose.Schema
         type: Number,
         default : 2021
     },
+    tags : [String],
     authorName : String,
     totalPages : Number,
     stockAvailable : Boolean
