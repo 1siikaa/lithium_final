@@ -31,7 +31,7 @@ const getParticularBooks = async function (req, res){
 
 const getXINRBooks = async function (req, res){
     let getpricedata = await BookModel.find({
-        indianPrice:{$in:['100INR', '200INR', '500INR']}
+        "price.indianPrice":{$in:['100INR', '200INR', '500INR']}
     })
     res.send({msg: getpricedata})
 }
