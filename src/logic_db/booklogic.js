@@ -19,7 +19,7 @@ const createAuthor = async function (req, res ){
 
 const bookList = async function (req, res){
     
-    let getauthor = await AuthorModel.find().populate('Composer')
+    let getauthor = await AuthorModel.find().populate('author_id')
 res.send({msg: getauthor})
 }
 
