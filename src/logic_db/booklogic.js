@@ -15,16 +15,12 @@ const createAuthor = async function (req, res ){
     res.send({msg: storeData})
 }
 
+
+
 const bookList = async function (req, res){
-    let id
-    let n
-    let getauthor = await AuthorModel.find({authorName: "Chetan Bhagat"})
-    for(let i=0; i<getauthor.length;i++){
-         id= getauthor[i]
-         n = id.author_id}
-        let getbook = await BookModel.find()
-        let result = getbook.filter((element)=>element.author_id==n)
-res.send({msg: result})
+    
+    let getauthor = await AuthorModel.find().populate('Composer')
+res.send({msg: getauthor})
 }
 
 const findBookPrice = async function (req, res){
