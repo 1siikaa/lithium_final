@@ -9,3 +9,12 @@ Backend cohort Oct 2022 - Jan 2023
 
 ## Assignment
 https://docs.google.com/document/d/1F7b6nA1l8UcA8QgRktSGzk91k8JqJeNBtOCluTh_DCE/edit
+
+
+else 
+    for(let j=0; j<publisherdata.length; j++){
+        ele = publisherdata[j]
+        ind = ele._id
+        if(saveData.publisher_id !== ind) 
+        res.send({msg: "sorry, this publisher is not present"})
+        }

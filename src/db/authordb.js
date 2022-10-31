@@ -3,7 +3,9 @@ const authorishSchema = new mongoose.Schema
 ({
     
     authorName : String,
-    age: Number},
+    age: Number,
+address: String,
+rating: Number},
     { timestamps : true});
 
-     module.exports = mongoose.model('Composer', authorishSchema)
+     module.exports = mongoose.model('NewAuthor', authorishSchema)
