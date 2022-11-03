@@ -1,15 +1,16 @@
 const mongoose = require('mongoose')
+const ObjectId = mongoose.Schema.Types.ObjectId
 const ProductModel = require('../db/productdb.js')
 const UserModel = require('../db/userdb.js')
 const orderSchema = new mongoose.Schema
 
 ({
     userId: {
-        type: Schema.Types.ObjectId,
+        type: ObjectId,
         ref: 'User'
     },
 	productId: {
-        type: Schema.Types.ObjectId,
+        type: ObjectId,
         ref: 'Product'
     },
 	amount: Number,

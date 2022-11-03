@@ -2,11 +2,12 @@ const { isValidObjectId } = require('mongoose')
 
 
 const headerValidation= function(req,res,next){
-    let header= req.headers["isFreeAppUser"]
+    let header= req.headers["isfreeappuser"]
     if(header) next()
     else res.send({Error: "request is missing a mandatory header."})
     
 }
+
 
 const userValidation = function(req,res,next){
     let order = req.body
@@ -25,6 +26,7 @@ let order = req.body
     else 
     res.send({Error: "this field is required." })
 }
+
 
 module.exports.userValidation= userValidation
 module.exports.productValidation= productValidation
