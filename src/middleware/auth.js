@@ -4,25 +4,27 @@ const LogicController = require('../logic_db/logic.js')
 
 const headerValidation= function(req,res,next){
     let token = req.headers["x-auth-token"];
-    if (!token) return res.send({ status: false, msg: "token must be present" });
+    if (!token) return res.status(400).send({ status: false, Error:"BAD REQUEST",msg: "token must be present" });
     else next() }
 
 const idValidation = function(req,res,next){
     let userId = req.params.userId
+    if(userId){
     if(isValidObjectId(userId))
     next()
     else
-    res.send("this is not a valid object id")}
+    res.status(400).send({Error:"BAD REQUEST",msg:"this is not a valid object id"})}
+    else
+    res.status(400).send({Error:"BAD REQUEST",msg:"userId is required"})}
 
 
 const tokenValidation = function(req,res,next){
     let token = req.headers["x-auth-token"];
     let validToken = jwt.verify(token, 'assignment/auth-1');
     if (!validToken)
-      return res.send({ status: false, msg: "token is invalid" });
+      return res.status(403).send({ status: false, Error:"Authentication Failed (FORBIDDEN) " , msg: "token is invalid" });
     else
     req.validToken= validToken
-    console.log(req.validToken)
   next()}
 
   

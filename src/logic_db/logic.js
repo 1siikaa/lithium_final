@@ -4,15 +4,30 @@ const jwt= require('jsonwebtoken')
 const middleware = require('../middleware/auth.js')
 
 const createUser = async function (req, res ){
+    try{
     let info = req.body
+    if(Object.keys(info).length!==0){
     let register = await RegisterModel.create(info)
-    res.send({msg: register})}
+    res.status(201).send({msg: register})}
+    else
+    res.status(400).send({msg:"BAD REQUEST"})}
 
+    catch(error){
+    res.status(500).send({msg:"Internal Server Error",Error: error.message})
+    }}
 
 
     const getAllUser = async function (req, res ){
+      try{
+        if(RegisterModel){
         let get = await RegisterModel.find()
-        res.send({msg: get})}
+        res.status(200).send({msg: "SUCCESSFUL", data: get})}
+      else{
+        res.status(204).send({msg: "NO CONTENT"})
+      }}
+        catch(error){
+        res.status(500).send({msg:"Internal Server Error",Error: error.message})  
+        }}
 
 
 
@@ -27,20 +42,16 @@ const logInUser= async function (req, res ){
     let user = await RegisterModel.findOne({emailId: userName, password: passkey})
 
     if(!user){
-    return res.status(401).send({msg: "emailId or password is not correct."})
-    }
+    return res.status(401).send({msg: "emailId or password is not correct."}) }
 
     let payload= {userId : user}
     let token = await jwt.sign(payload, 'assignment/auth-1')
-    res.send({data:token})}
+    res.status(200).send({data:token})}
     else{
-      res.send({msg: "emailId and password is required to login"})
-    }
-  }
-
-  catch(error){
-    res.status(500).send({msg : error.message})
-  }}
+      res.status(400).send({ ERROR:"BAD REQUEST", msg: "emailId and password is required to login"})
+    } }
+   catch(error){
+    res.status(500).send({msg:"Internal Server Error", Error: error.message})}}
 
  
 
@@ -52,44 +63,55 @@ const getAuthorizedUser = async function(req, res){
   let userDetails = await RegisterModel.findById(userId);
   
   if (!userDetails)
-    return res.send({ status: false, msg: "No such user exists" });
+    return res.status(204).send({ status: false, msg: "No such user exists" });
     else
-    res.send({ data: userDetails })
-    console.log(userDetails);
-}}
+    res.status(200).send({ msg:"SUCCESSFUL",data: userDetails })
+    console.log(userDetails)}
+else
+res.status(401).send({ERROR:"Unauthorized error occured"})}
 catch(error){
-  res.status(500).send({msg : error.message})
+  res.status(500).send({ERROR:"Internal Server Error",msg : error.message})
 }}
 
 const updateMobile = async function(req, res, next){
   try{
-      let contact= req.body.mobile
-      console.log(contact)
+      let body= req.body
+      if(Object.keys(body).length!==0){
+      let contact= body.mobile
       let userId = req.params.userId;
+      if(req.validaToken.userId._id){
       if(req.validToken.userId._id==userId){
      let updatedUser = await RegisterModel.findOneAndUpdate({_id: userId},
        {$set:{mobile: contact}},
        {new:true});
-   res.send({data: updatedUser})
-   console.log(updatedUser)
-}}
-catch(error){
-  res.status(500).send({msg : error.message})
+   res.status(205).send({msg:"UPDATED SUCCESSFULLY",data: updatedUser})}
+   else{
+    res.status(401).send({ERROR:"Unauthorized error occured"})}}
+   else{
+  res.status(400).send({msg:"BAD REQUEST"})}}}
+  catch(error){
+  res.status(500).send({msg:"Internal Server Error",msg : error.message})
 }}
 
 
 const markDirty = async function(req, res, next){
   try{
-    let info= req.body.isDeleted
+    let content= req.body
+    if(Object.keys(content).length!==0){
+    let info= content.isDeleted
     let userId = req.params.userId;
+    if(req.validaToken.userId._id){
     if(req.validToken.userId._id==userId){
    let deleteUser = await RegisterModel.findOneAndUpdate({_id: userId},
      {$set:{isDeleted: info}},
      {new:true});
-   res.send({data: deleteUser})
-}}
+   res.status(205).send({msg:"UPDATED SUCCESSFULLY",data: deleteUser})}
+   else{
+    res.status(401).send({ERROR:"Unauthorized error occured"})}}
+   else{
+  res.status(400).send({msg:"BAD REQUEST"})}}}
 catch(error){
-  res.status(500).send({msg : error.message})
+  res.status(500).send({msg:"Internal Server Error",msg : error.message})
 }}
 
 
