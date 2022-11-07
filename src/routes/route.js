@@ -6,9 +6,9 @@ const middleware = require('../middleware/auth.js')
 
 
 router.post('/createUser', LogicController.createUser)
-router.get('/getUser', LogicController.getUser)
+router.get('/getAllUser', LogicController.getAllUser)
 router.post('/logInUser',  LogicController.logInUser)
-router.get('/createAuthorization/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation,LogicController.createAuthorization)
+router.get('/getAuthorizedUser/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation,LogicController.getAuthorizedUser)
 router.put('/updateMobile/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation, LogicController.updateMobile)
 router.delete('/markDirty/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation, LogicController.markDirty)
 module.exports = router;

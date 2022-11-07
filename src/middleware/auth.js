@@ -19,8 +19,10 @@ const tokenValidation = function(req,res,next){
     if (!decodedToken)
       return res.send({ status: false, msg: "token is invalid" });
     else
+    req.decodedToken= decodedToken
   next()}
 
+  
 
 
 module.exports.idValidation= idValidation
