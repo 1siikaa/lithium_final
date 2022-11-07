@@ -9,17 +9,20 @@ const headerValidation= function(req,res,next){
 
 const idValidation = function(req,res,next){
     let userId = req.params.userId
-    if(isValidObjectId(userId)) next()
+    if(isValidObjectId(userId))
+    next()
+    else
     res.send("this is not a valid object id")}
 
 
 const tokenValidation = function(req,res,next){
-    
-    let decodedToken = jwt.verify(token, 'assignment/auth-1');
-    if (!decodedToken)
+    let token = req.headers["x-auth-token"];
+    let validToken = jwt.verify(token, 'assignment/auth-1');
+    if (!validToken)
       return res.send({ status: false, msg: "token is invalid" });
     else
-    req.decodedToken= decodedToken
+    req.validToken= validToken
+    console.log(req.validToken)
   next()}
 
   

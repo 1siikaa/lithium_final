@@ -18,7 +18,7 @@ const createUser = async function (req, res ){
 
 const logInUser= async function (req, res ){
   try{
-    if(req.body && req.emailId && req.password){
+    if(req.body.emailId && req.body.password){
 
     let userName = req.body.emailId
     let passkey = req.body.password
@@ -33,6 +33,9 @@ const logInUser= async function (req, res ){
     let payload= {userId : user}
     let token = await jwt.sign(payload, 'assignment/auth-1')
     res.send({data:token})}
+    else{
+      res.send({msg: "emailId and password is required to login"})
+    }
   }
 
   catch(error){
@@ -44,12 +47,15 @@ const logInUser= async function (req, res ){
 const getAuthorizedUser = async function(req, res){
   try{
   let userId = req.params.userId;
-  if(req.decodeToken._id==userId){
-
+  if(req.validToken.userId._id==userId){
+   
   let userDetails = await RegisterModel.findById(userId);
+  
   if (!userDetails)
     return res.send({ status: false, msg: "No such user exists" });
-    res.send({ status: true, data: userDetails });
+    else
+    res.send({ data: userDetails })
+    console.log(userDetails);
 }}
 catch(error){
   res.status(500).send({msg : error.message})
@@ -57,13 +63,15 @@ catch(error){
 
 const updateMobile = async function(req, res, next){
   try{
-    let info= req.body.mobile
-    let userId = req.params.userId;
-    if(req.decodeToken._id==userId){
-    let updatedUser = await RegisterModel.findOneAndUpdate({_id: userId},
-     {$set:{mobile: info}},
-     {new:true});
+      let contact= req.body.mobile
+      console.log(contact)
+      let userId = req.params.userId;
+      if(req.validToken.userId._id==userId){
+     let updatedUser = await RegisterModel.findOneAndUpdate({_id: userId},
+       {$set:{mobile: contact}},
+       {new:true});
    res.send({data: updatedUser})
+   console.log(updatedUser)
 }}
 catch(error){
   res.status(500).send({msg : error.message})
@@ -74,7 +82,7 @@ const markDirty = async function(req, res, next){
   try{
     let info= req.body.isDeleted
     let userId = req.params.userId;
-    if(req.decodeToken._id==userId){
+    if(req.validToken.userId._id==userId){
    let deleteUser = await RegisterModel.findOneAndUpdate({_id: userId},
      {$set:{isDeleted: info}},
      {new:true});
