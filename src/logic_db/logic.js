@@ -68,7 +68,7 @@ const getAuthorizedUser = async function(req, res){
     res.status(200).send({ msg:"SUCCESSFUL",data: userDetails })
     console.log(userDetails)}
 else
-res.status(401).send({ERROR:"Unauthorized error occured"})}
+res.status(403).send({ERROR:"NOT AUTHENTICATED"})}
 catch(error){
   res.status(500).send({ERROR:"Internal Server Error",msg : error.message})
 }}
@@ -86,7 +86,7 @@ const updateMobile = async function(req, res, next){
        {new:true});
    res.status(205).send({msg:"UPDATED SUCCESSFULLY",data: updatedUser})}
    else{
-    res.status(401).send({ERROR:"Unauthorized error occured"})}}
+    res.status(403).send({ERROR:"NOT AUTHENTICATED"})}}
    else{
   res.status(400).send({msg:"BAD REQUEST"})}}}
   catch(error){
@@ -107,7 +107,7 @@ const markDirty = async function(req, res, next){
      {new:true});
    res.status(205).send({msg:"UPDATED SUCCESSFULLY",data: deleteUser})}
    else{
-    res.status(401).send({ERROR:"Unauthorized error occured"})}}
+    res.status(403).send({ERROR:"NOT AUTHENTICATED"})}}
    else{
   res.status(400).send({msg:"BAD REQUEST"})}}}
 catch(error){
