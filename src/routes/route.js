@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const RegisterModel = require('../db/registerdb.js')
-const LogicController = require('../logic_db/logic.js')
-const middleware = require('../middleware/auth.js')
+const VaccinationController = require('../logic_db/vaccination.js')
+const WeatherController = require('../logic_db/weather.js')
+const MemeController = require('../logic_db/meme.js')
 
 
-router.post('/createUser', LogicController.createUser)
-router.get('/getAllUser', LogicController.getAllUser)
-router.post('/logInUser',  LogicController.logInUser)
-router.get('/getAuthorizedUser/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation,LogicController.getAuthorizedUser)
-router.put('/updateMobile/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation, LogicController.updateMobile)
-router.delete('/markDirty/:userId',middleware.idValidation,middleware.headerValidation, middleware.tokenValidation, LogicController.markDirty)
+
+router.get('/districtData', VaccinationController.districtData)
+router.get('/weather', WeatherController.weather)
+router.get('/weatherOfOtherCities', WeatherController.weatherOfOtherCities)
+router.get('/getMeme', MemeController.getMeme)
+router.post('/createMeme', MemeController.createMeme)
 module.exports = router;
 
